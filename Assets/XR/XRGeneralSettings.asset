@@ -76,5 +76,9 @@ MonoBehaviour:
   m_RequiresSettingsUpdate: 0
   m_AutomaticLoading: 0
   m_AutomaticRunning: 0
+<<<<<<< HEAD
   m_Loaders:
   - {fileID: 11400000, guid: 9a2c7c3c6618c7c4bad4f68c78c831ca, type: 2}
+=======
+  m_Loaders: []
+>>>>>>> parent of 0e5f240 (add handtracking)

@@ -4,10 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
+<<<<<<< HEAD
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/BedroomScene.unity
     guid: 18eabef5c34b9704b9bb79723b3c2a96
+=======
+  m_Scenes: []
+>>>>>>> parent of 0e5f240 (add handtracking)
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 0a2a9c4dca7f55940a5e5bc6d8812c0d, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 94d11df71193edf40a2f948f925d3965, type: 2}

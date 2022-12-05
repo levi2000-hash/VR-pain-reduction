@@ -7,10 +7,10 @@ using System.Collections;
 public class IKControl : MonoBehaviour {
 
     protected Animator animator;
+    public Transform rightVRController;
+    public Transform leftVRController;
+    public Transform vrCamera;
 
-    public bool ikActive = false;
-    public Transform rightHandObj = null;
-    public Transform lookObj = null;
 
     void Start ()
     {
@@ -20,33 +20,26 @@ public class IKControl : MonoBehaviour {
     //a callback for calculating IK
     void OnAnimatorIK()
     {
-        if(animator) {
+        float reachR = animator.GetFloat("PlayerRightHand");
+       animator.SetIKPositionWeight(AvatarIKGoal.RightHand, reachR);
+       animator.SetIKPosition(AvatarIKGoal.RightHand, rightVRController.position);
 
-            //if the IK is active, set the position and rotation directly to the goal.
-            if(ikActive) {
+       float reachL = animator.GetFloat("PlayerLeftHand");
+       animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, reachL);
+       animator.SetIKPosition(AvatarIKGoal.LeftHand, leftVRController.position);
 
-                // Set the look target position, if one has been assigned
-                if(lookObj != null) {
-                    animator.SetLookAtWeight(1);
-                    animator.SetLookAtPosition(lookObj.position);
-                }    
+       //camera moves with head butt only forwared
+       animator.SetLookAtWeight(1f);
+       animator.SetLookAtPosition(vrCamera.position + vrCamera.forward * 10f);
 
-                // Set the right hand target position and rotation, if one has been assigned
-                if(rightHandObj != null) {
-                    animator.SetIKPositionWeight(AvatarIKGoal.RightHand,1);
-                    animator.SetIKRotationWeight(AvatarIKGoal.RightHand,1);  
-                    animator.SetIKPosition(AvatarIKGoal.RightHand,rightHandObj.position);
-                    animator.SetIKRotation(AvatarIKGoal.RightHand,rightHandObj.rotation);
-                }        
+       //animator.SetFloat("PlayerHead", Mathf.Lerp(0,1,(vrCamera.position.y-crou)));
 
-            }
+       //Hand rotation
+       Quaternion angleOffset = Quaternion.Euler(0, 0, 0);
+       animator.SetIKRotation(AvatarIKGoal.RightHand, rightVRController.rotation * angleOffset);
+       animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
+       animator.SetIKRotation(AvatarIKGoal.LeftHand, leftVRController.rotation * angleOffset);
+       animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1);
 
-            //if the IK is not active, set the position and rotation of the hand and head back to the original position
-            else {          
-                animator.SetIKPositionWeight(AvatarIKGoal.RightHand,0);
-                animator.SetIKRotationWeight(AvatarIKGoal.RightHand,0);
-                animator.SetLookAtWeight(0);
-            }
-        }
     }    
 }
